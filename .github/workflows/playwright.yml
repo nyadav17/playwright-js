@@ -13,13 +13,27 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Install chrome
+        uses: ./
+        with:
+          chrome-version: 130
+        id: setup-chrome
+      - if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: |
+          "${{ steps.setup-chrome.outputs.chrome-path }}" --version
+          "${{ steps.setup-chrome.outputs.chromedriver-path }}" --version
+      - if: runner.os == 'Windows'
+        run: |
+          (Get-Item (Get-Command "${{ steps.setup-chrome.outputs.chrome-path }}").Source).VersionInfo.ProductVersion
+          (Get-Item (Get-Command "${{ steps.setup-chrome.outputs.chromedriver-path }}").Source).VersionInfo.ProductVersion
+
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "23"
+          node-version: "23.1.0"
 
       - name: Install dependencies
         run: npm install
