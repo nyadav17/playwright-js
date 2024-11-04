@@ -6,5 +6,4 @@ const launchBrowser = async (url) => {
   await page.goto(url);
   await browser.close();
 };
-
 module.exports = { launchBrowser };

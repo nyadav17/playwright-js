@@ -1,9 +1,10 @@
-node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/allure*/
-/screenshots/
+node_modules
+test-results
+playwright-report
+blob-report
+playwright/.cache/
+allure*
+screenshots
 .DS_Store
+dir
 
