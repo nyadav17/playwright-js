@@ -1,0 +1,12 @@
+<testsuites id="" name="" tests="4" failures="0" skipped="0" errors="0" time="1.867502">
+<testsuite name="regres.spec.js" timestamp="2024-10-17T18:41:08.654Z" hostname="chromium" tests="4" failures="0" skipped="0" time="1.543" errors="0">
+<testcase name="listUsers" classname="regres.spec.js" time="0.238">
+</testcase>
+<testcase name="createUser" classname="regres.spec.js" time="0.499">
+</testcase>
+<testcase name="updateUser" classname="regres.spec.js" time="0.408">
+</testcase>
+<testcase name="deleteUser" classname="regres.spec.js" time="0.398">
+</testcase>
+</testsuite>
+</testsuites>
