@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: mac-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
