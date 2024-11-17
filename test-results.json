@@ -1,0 +1,259 @@
+{
+  "config": {
+    "configFile": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/playwright.config.js",
+    "rootDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/node_modules/allure-playwright/dist/cjs/index.js",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.48.2",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "sauce-demo-home.spec.js",
+      "file": "sauce-demo-home.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "testing with standard_user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "status": "passed",
+                  "duration": 2164,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2024-11-14T12:16:56.791Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbf764b015904d77e876-9404b7fb560f5573804f",
+          "file": "sauce-demo-home.spec.js",
+          "line": 20,
+          "column": 3
+        },
+        {
+          "title": "testing with problem_user",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "status": "failed",
+                  "duration": 438,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_RESET at https://saucedemo.com/\nCall log:\n  \u001b[2m- navigating to \"https://saucedemo.com/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_RESET at https://saucedemo.com/\nCall log:\n  \u001b[2m- navigating to \"https://saucedemo.com/\", waiting until \"load\"\u001b[22m\n\n    at /Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e/sauce-demo-home.spec.js:22:16",
+                    "location": {
+                      "file": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e/sauce-demo-home.spec.js",
+                      "column": 16,
+                      "line": 22
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 20 |\u001b[39m   test(\u001b[32m`testing with ${name}`\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 21 |\u001b[39m     \u001b[36mconst\u001b[39m sauceDemoHome \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mSauceDemoHomePage\u001b[39m(page)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m\"https:/saucedemo.com\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 23 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m\"#user-name\"\u001b[39m)\u001b[33m.\u001b[39mfill(name)\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m\"#password\"\u001b[39m)\u001b[33m.\u001b[39mfill(password)\u001b[33m;\u001b[39m\n \u001b[90m 25 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m\"#login-button\"\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e/sauce-demo-home.spec.js",
+                        "column": 16,
+                        "line": 22
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_RESET at https://saucedemo.com/\nCall log:\n  \u001b[2m- navigating to \"https://saucedemo.com/\", waiting until \"load\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 20 |\u001b[39m   test(\u001b[32m`testing with ${name}`\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 21 |\u001b[39m     \u001b[36mconst\u001b[39m sauceDemoHome \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mSauceDemoHomePage\u001b[39m(page)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m\"https:/saucedemo.com\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 23 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m\"#user-name\"\u001b[39m)\u001b[33m.\u001b[39mfill(name)\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m\"#password\"\u001b[39m)\u001b[33m.\u001b[39mfill(password)\u001b[33m;\u001b[39m\n \u001b[90m 25 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m\"#login-button\"\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e/sauce-demo-home.spec.js:22:16\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2024-11-14T12:16:56.795Z",
+                  "attachments": [],
+                  "errorLocation": {
+                    "file": "/Users/niteshyadav/vscodews/nodejs/testing/playwright-js/e2e/sauce-demo-home.spec.js",
+                    "column": 16,
+                    "line": 22
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbf764b015904d77e876-e883b73c8fe05c35b226",
+          "file": "sauce-demo-home.spec.js",
+          "line": 20,
+          "column": 3
+        },
+        {
+          "title": "testing with performance_glitch_user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "status": "passed",
+                  "duration": 7135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2024-11-14T12:16:56.790Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbf764b015904d77e876-500e9f047097141a02d7",
+          "file": "sauce-demo-home.spec.js",
+          "line": 20,
+          "column": 3
+        },
+        {
+          "title": "testing with visual_user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "status": "passed",
+                  "duration": 2163,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2024-11-14T12:16:56.802Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbf764b015904d77e876-faddcb15a49735d2b6a9",
+          "file": "sauce-demo-home.spec.js",
+          "line": 20,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2024-11-14T12:16:56.463Z",
+    "duration": 7709.404,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

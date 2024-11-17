@@ -1,42 +1,25 @@
 name: Playwright Tests
-
 on:
   push:
-    branches:
-      - main
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-
+    branches: [main, master]
 jobs:
   test:
-    runs-on: windows-latest
-
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
     steps:
-      - name: Install chrome
-        uses: ./
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          chrome-version: 130
-        id: setup-chrome
-      - if: runner.os == 'Linux' || runner.os == 'macOS'
-        run: |
-          "${{ steps.setup-chrome.outputs.chrome-path }}" --version
-          "${{ steps.setup-chrome.outputs.chromedriver-path }}" --version
-      - if: runner.os == 'Windows'
-        run: |
-          (Get-Item (Get-Command "${{ steps.setup-chrome.outputs.chrome-path }}").Source).VersionInfo.ProductVersion
-          (Get-Item (Get-Command "${{ steps.setup-chrome.outputs.chromedriver-path }}").Source).VersionInfo.ProductVersion
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+          node-version: 23
+      - name: Build Docker image
+        run: docker build -t playwright-tests .
+      - name: Run Playwright tests on Docker
+        run: docker run playwright-tests
+      - uses: actions/upload-artifact@v3
+        if: always()
         with:
-          node-version: "23.1.0"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run Playwright tests
-        run: npx playwright test
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
