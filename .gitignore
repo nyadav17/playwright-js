@@ -3,8 +3,11 @@ test-results
 playwright-report
 blob-report
 playwright/.cache/
-allure*
+reports
 screenshots
 .DS_Store
 dir
-
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+allure-results
