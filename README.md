@@ -10,3 +10,4 @@
 
 ![Allure Report Overview](readme-data/SampleReportOverview.png)
 ![Allure Report Detailed](readme-data/SampleReportDetailed.png)
+![Allure Report Detailed : Screenshot & Video](ScreenshotScreenshotVideo.png)
