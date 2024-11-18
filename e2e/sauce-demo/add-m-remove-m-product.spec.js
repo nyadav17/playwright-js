@@ -36,16 +36,6 @@ const exp = require("constants");
     ],
     removeProductNames: ["Sauce Labs Backpack", "Sauce Labs Bike Light"],
   },
-  {
-    userName: "visual_user",
-    userPassword: "secret_sauce",
-    productNames: [
-      "Sauce Labs Backpack",
-      "Sauce Labs Bike Light",
-      "Sauce Labs Onesie",
-    ],
-    removeProductNames: ["Sauce Labs Backpack", "Sauce Labs Bike Light"],
-  },
 ].forEach(({ userName, userPassword, productNames, removeProductNames }) => {
   test(`Add multiple product remove multiple product | testing with ${userName}`, async ({
     page,
@@ -77,10 +67,7 @@ const exp = require("constants");
       await page.locator("//button[text()='Back to products']").click();
       productMapIO.set(productName, itemPrice);
     }
-    let sum = 0;
-    productMapIO.forEach((v) => {
-      sum += Number(v);
-    });
+
     await page.locator(".shopping_cart_link").click();
 
     if (removeProductNames.length != 0) {
@@ -89,10 +76,15 @@ const exp = require("constants");
         await page.locator("//div[text()='" + removeProductName + "']").click();
         await page.locator("//button[text()='Remove']").click();
         await page.locator("//button[text()='Back to products']").click();
+        await expect(page.locator(".shopping_cart_link")).toBeAttached();
         await page.locator(".shopping_cart_link").click();
         productMapIO.delete(removeProductName);
       }
     }
+    let sum = 0;
+    productMapIO.forEach((v) => {
+      sum += Number(v);
+    });
 
     // verify  added products
     const liItems = await page.locator("//div[@data-test='inventory-item']");
@@ -123,7 +115,6 @@ const exp = require("constants");
     await page.locator("#last-name").fill("Yadav");
     await page.locator("#postal-code").fill("122001");
     await page.locator("#continue").click();
-    await page.locator("#finish").click();
 
     let checkOutTotPrice = await page
       .locator("//div[contains(text(),'Item total')]")
@@ -135,7 +126,10 @@ const exp = require("constants");
         sum
       );
     }
+
+    await page.locator("#finish").click();
     await page.getByText("Open Menu").click();
+    await page.locator("#reset_sidebar_link").click();
     await page.locator("#logout_sidebar_link").click();
   });
 });

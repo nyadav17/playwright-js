@@ -108,6 +108,7 @@ const exp = require("constants");
     }
     await page.locator("#finish").click();
     await page.getByText("Open Menu").click();
+    await page.locator("#reset_sidebar_link").click();
     await page.locator("#logout_sidebar_link").click();
   });
 });
