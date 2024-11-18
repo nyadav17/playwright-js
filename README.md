@@ -1,4 +1,12 @@
-# Sample Report Sauce Demo
+# Sauce Demo
 
-![Sample Report Overview](../playwright-js/readme-data/SampleReportOverview.PNG)
-![Sample Report Detailed](../playwright-js/readme-data/SampleReportOverview.PNG)
+## Features
+
+- Git Hub Actions - on branch --> main
+- Allure Report - screenshot and video
+- Local Docker Run
+
+## Screenshot
+
+![Allure Report Overview](readme-data/SampleReportOverview.png)
+![Allure Report Detailed](readme-data/SampleReportDetailed.png)
