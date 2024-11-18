@@ -44,7 +44,8 @@ const exp = require("constants");
     await page.goto("https://www.saucedemo.com", {
       waitUntil: "domcontentloaded",
     });
-
+    sauceDemoHome.navigate();
+    //sauceDemoHome.login(userName, userPassword);
     await page.locator("#user-name").fill(userName);
     await page.locator("#password").fill(userPassword);
     await page.locator("#login-button").click();

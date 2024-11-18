@@ -15,7 +15,7 @@ exports.SauceDemoHomePage = class SauceDemoHomePage {
   }
 
   async navigate() {
-    await page.goto("https://saucedemo.com", {
+    await this.page.goto("https://saucedemo.com", {
       waitUntil: "domcontentloaded",
     });
   }
