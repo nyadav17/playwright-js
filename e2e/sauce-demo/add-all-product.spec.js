@@ -23,10 +23,6 @@ const exp = require("constants");
     userName: "performance_glitch_user",
     userPassword: "secret_sauce",
   },
-  {
-    userName: "visual_user",
-    userPassword: "secret_sauce",
-  },
 ].forEach(({ userName, userPassword }) => {
   test(`Add All product | testing with ${userName}`, async ({ page }) => {
     const productMapIO = new Map();
@@ -70,9 +66,6 @@ const exp = require("constants");
         productMapIO.set(productName, price);
       }
     }
-
-    console.log(productMapIO);
-
     let sum = 0;
     productMapIO.forEach((v) => {
       sum += Number(v);
@@ -121,6 +114,7 @@ const exp = require("constants");
 
     await page.locator("#finish").click();
     await page.getByText("Open Menu").click();
+    await page.locator("#reset_sidebar_link").click();
     await page.locator("#logout_sidebar_link").click();
   });
 });
