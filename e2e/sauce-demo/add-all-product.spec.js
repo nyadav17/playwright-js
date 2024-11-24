@@ -1,120 +1,126 @@
 // @ts-check
 
-const { test, expect } = require("@playwright/test");
-const templateStringUtil = require("../../utils/templateStringUtil.js");
-const mapUtil = require("../../utils/MapUtil.js");
+import { test, expect } from "@playwright/test";
+const { SauceDemoHomePage } = require("../../pages/sauce-demo/home.js");
+import path from "path";
+import fs from "fs";
+import { parse } from "csv-parse/sync";
 
-const {
-  SauceDemoHomePage,
-} = require("../../pages/sauce-demo/sauce-demo-home-page.js");
-const exp = require("constants");
-
-// 1. Verify session-username after login. Cookie session-username should have correct value (used username)
-// 2. Override the selenium getValue() or getText() method.
-// 3. Apply overrided method to Login button and login_logo (html class name) and put method call in any test.
-// 4. Also please implement the mechanism of making screenshots and storing them.
-
-[
+const records = parse(
+  fs.readFileSync(
+    path.join(__dirname, "../../data", "sauce-demo", "users.csv")
+  ),
   {
-    userName: "standard_user",
-    userPassword: "secret_sauce",
-  },
-  {
-    userName: "performance_glitch_user",
-    userPassword: "secret_sauce",
-  },
-].forEach(({ userName, userPassword }) => {
-  test(`Add All product | testing with ${userName}`, async ({ page }) => {
-    const productMapIO = new Map();
-    const productMapCO = new Map();
-    await page.goto("https:/saucedemo.com");
-    await page.locator("#user-name").fill(userName);
-    await page.locator("#password").fill(userPassword);
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: ",",
+  }
+);
 
-    await page.locator("#login-button").click();
-    const sessionData = await page.context().storageState();
-    expect(
-      sessionData.cookies.at(0)?.value,
-      "cookie has data for user: " + userName
-    ).toEqual(userName);
+test.beforeEach("before each", async ({ page }) => {
+  const sauceDemoHome = new SauceDemoHomePage(page);
+  sauceDemoHome.navigate();
+});
 
-    // add product/products
-    const liItemsIO = await page.locator("//div[@data-test='inventory-item']");
-    const liItemCounterIO = await liItemsIO.count();
-    if (liItemCounterIO) {
-      for (let i = 0; i < liItemCounterIO; i++) {
-        const productName = await liItemsIO
-          .nth(i)
-          .locator(
-            "//descendant-or-self::div[@data-test='inventory-item-name']"
-          )
-          .textContent();
+for (const record of records) {
+  test.describe("@All @SauceDemoFull", () => {
+    test(`Add All product | testing with ${record.userName}`, async ({
+      page,
+    }) => {
+      const productMapIO = new Map();
+      const productMapCO = new Map();
+      await page.locator("#user-name").fill(record.userName);
+      await page.locator("#password").fill(record.userPassword);
 
-        const price = (
+      await page.locator("#login-button").click();
+      const sessionData = await page.context().storageState();
+      expect(
+        sessionData.cookies.at(0)?.value,
+        "cookie has data for user: " + record.userName
+      ).toEqual(record.userName);
+
+      //apply filter
+      const filter = page.locator("css=.product_sort_container");
+      filter.selectText("Name (Z to A)");
+
+      // add product/products
+      const liItemsIO = page.locator("//div[@data-test='inventory-item']");
+      const liItemCounterIO = await liItemsIO.count();
+      if (liItemCounterIO) {
+        for (let i = 0; i < liItemCounterIO; i++) {
+          const productName = await liItemsIO
+            .nth(i)
+            .locator(
+              "//descendant-or-self::div[@data-test='inventory-item-name']"
+            )
+            .textContent();
+
+          const price = (
+            await liItemsIO
+              .nth(i)
+              .locator(
+                "//descendant-or-self::div[@data-test='inventory-item-price']"
+              )
+              .textContent()
+          )?.replace("$", "");
+
           await liItemsIO
             .nth(i)
-            .locator(
-              "//descendant-or-self::div[@data-test='inventory-item-price']"
-            )
-            .textContent()
-        )?.replace("$", "");
-
-        await liItemsIO
-          .nth(i)
-          .locator("//descendant-or-self::button[text()='Add to cart']")
-          .click();
-        productMapIO.set(productName, price);
+            .locator("//descendant-or-self::button[text()='Add to cart']")
+            .click();
+          productMapIO.set(productName, price);
+        }
       }
-    }
-    let sum = 0;
-    productMapIO.forEach((v) => {
-      sum += Number(v);
-    });
-    await page.locator(".shopping_cart_link").click();
+      let sum = 0;
+      productMapIO.forEach((v) => {
+        sum += Number(v);
+      });
+      await page.locator(".shopping_cart_link").click();
 
-    // verify added/removed products at checkout
-    const liItems = await page.locator("//div[@data-test='inventory-item']");
-    const liItemCounter = await liItems.count();
-    if (liItemCounter) {
-      for (let i = 0; i < liItemCounter; i++) {
-        const productName = await liItems
-          .nth(i)
-          .locator(
-            "//descendant-or-self::div[@data-test='inventory-item-name']"
-          )
-          .textContent();
-        const price = (
-          await liItems
+      // verify added/removed products at checkout
+      const liItems = page.locator("//div[@data-test='inventory-item']");
+      const liItemCounter = await liItems.count();
+      if (liItemCounter) {
+        for (let i = 0; i < liItemCounter; i++) {
+          const productName = await liItems
             .nth(i)
             .locator(
-              "//descendant-or-self::div[@data-test='inventory-item-price']"
+              "//descendant-or-self::div[@data-test='inventory-item-name']"
             )
-            .textContent()
-        )?.replace("$", "");
-        productMapCO.set(productName, price);
+            .textContent();
+          const price = (
+            await liItems
+              .nth(i)
+              .locator(
+                "//descendant-or-self::div[@data-test='inventory-item-price']"
+              )
+              .textContent()
+          )?.replace("$", "");
+          productMapCO.set(productName, price);
+        }
       }
-    }
-    expect(productMapCO, "mismatch at checkout").toStrictEqual(productMapIO);
+      expect(productMapCO, "mismatch at checkout").toStrictEqual(productMapIO);
 
-    await page.locator("#checkout").click();
-    await page.locator("#first-name").fill("Nitesh");
-    await page.locator("#last-name").fill("Yadav");
-    await page.locator("#postal-code").fill("122001");
-    await page.locator("#continue").click();
-    let checkOutTotPrice = await page
-      .locator("//div[contains(text(),'Item total')]")
-      .textContent();
+      await page.locator("#checkout").click();
+      await page.locator("#first-name").fill("Nitesh");
+      await page.locator("#last-name").fill("Yadav");
+      await page.locator("#postal-code").fill("122001");
+      await page.locator("#continue").click();
+      let checkOutTotPrice = await page
+        .locator("//div[contains(text(),'Item total')]")
+        .textContent();
 
-    if (checkOutTotPrice != null) {
-      checkOutTotPrice = checkOutTotPrice.replace("Item total: $", "");
-      expect(Number(checkOutTotPrice), "total price does not match").toEqual(
-        sum
-      );
-    }
+      if (checkOutTotPrice != null) {
+        checkOutTotPrice = checkOutTotPrice.replace("Item total: $", "");
+        expect(Number(checkOutTotPrice), "total price does not match").toEqual(
+          sum
+        );
+      }
 
-    await page.locator("#finish").click();
-    await page.getByText("Open Menu").click();
-    await page.locator("#reset_sidebar_link").click();
-    await page.locator("#logout_sidebar_link").click();
+      await page.locator("#finish").click();
+      await page.getByText("Open Menu").click();
+      await page.locator("#reset_sidebar_link").click();
+      await page.locator("#logout_sidebar_link").click();
+    });
   });
-});
+}
