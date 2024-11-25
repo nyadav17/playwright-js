@@ -1,11 +1,6 @@
 // @ts-check
 
 import { test, expect } from "@playwright/test";
-import { webkit } from "playwright";
-import path from "path";
-import fs from "fs";
-import { parse } from "csv-parse/sync";
-import process from "process";
 import { users } from "../../data/sauce-demo/users.json";
 import { LoginPage } from "../../pages/sauce-demo/LoginPage.js";
 import { ProductPage } from "../../pages/sauce-demo/ProductPage.js";

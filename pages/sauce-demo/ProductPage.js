@@ -8,14 +8,15 @@ export class ProductPage {
    */
   constructor(page) {
     this.page = page;
-    this.filter = this.page.locator("css=.product_sort_container");
-    // product name?
-    this.addToCart = this.page.locator("xpath=//button[text()='Add to cart']");
+    this.filter = this.page.locator(".product_sort_container");
+    this.productNames = this.page.locator(".inventory_item_name");
+    this.productName = this.page.locator(".inventory_details_name");
+    this.addToCart = this.page.locator("//button[text()='Add to cart']");
     this.productPrice = this.page.locator(
-      "xpath=//div[@class='inventory_details_price']"
+      "//div[@class='inventory_details_price']"
     );
     this.backToProducts = this.page.locator(
-      "xpath=//button[text()='Back to products']"
+      "//button[text()='Back to products']"
     );
 
     this.cart = this.page.locator(".shopping_cart_link");
@@ -38,6 +39,22 @@ export class ProductPage {
     const productprice = await this.productPrice.textContent();
     await this.backToProducts.click();
     return productprice?.replace("$", "");
+  }
+  async addAllProduct() {
+    const productCount = await this.productNames.count();
+    const productMapIO = new Map();
+    if (productCount) {
+      for (let i = 0; i < productCount; i++) {
+        await this.productNames.nth(i).click();
+        const name = await this.productName.textContent();
+        const prize = await this.productPrice.textContent();
+        await this.addToCart.click();
+        await this.backToProducts.click();
+        productMapIO.set(name, prize?.replace("$", ""));
+      }
+    }
+
+    return productMapIO;
   }
 
   async moveToCart() {

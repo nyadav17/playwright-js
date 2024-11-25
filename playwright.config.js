@@ -15,7 +15,7 @@ dotenv.config({
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  timeout: 0.5 * 60 * 1000,
+  timeout: 1 * 60 * 1000,
   testDir: "./e2e/",
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -24,7 +24,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : undefined,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 50 : 50,
+  workers: process.env.CI ? undefined : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ["list"],
@@ -60,7 +60,7 @@ export default defineConfig({
     //   use: { ...devices["Desktop Safari"] },
     // },
 
-    // /* Test against mobile viewports. */
+    /* Test against mobile viewports. */
     // {
     //   name: "Mobile Chrome",
     //   use: { ...devices["Pixel 5"] },

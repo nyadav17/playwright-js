@@ -9,10 +9,10 @@ export class HomeMenu {
   constructor(page) {
     this.page = page;
     this.openMenu = this.page.getByRole("button", { name: "Open Menu" });
-    this.allItems = this.page.getByText("#inventory_sidebar_link");
-    this.about = this.page.getByText("#about_sidebar_link");
-    this.reset = this.page.locator("#reset_sidebar_link");
-    this.logout = this.page.locator("#logout_sidebar_link");
+    this.allItems = this.page.getByText("All Items");
+    this.about = this.page.getByText("About");
+    this.reset = this.page.getByText("Reset App State");
+    this.logout = this.page.getByText("Logout");
   }
 
   async cleanUp() {

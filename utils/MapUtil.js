@@ -1,4 +1,3 @@
-"use-strict";
 // @ts-check
 
 export function areMapsEqual(map1, map2) {
