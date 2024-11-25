@@ -2,7 +2,7 @@
 FROM node:23.1.0
 
 # Get the latest version of Playwright
-FROM mcr.microsoft.com/playwright:v1.48.1-jammy
+FROM mcr.microsoft.com/playwright:v1.49.0-jammy
 
 # Set the working directory
 WORKDIR /app
