@@ -1,3 +1,5 @@
+"use-strict";
+// @ts-check
 export function singleLineString(strings, ...values) {
   // Interweave the strings with the
   // substitution vars first.

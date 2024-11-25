@@ -1,3 +1,5 @@
+// @ts-check
+
 export function areMapsEqual(map1, map2) {
   // Check if both maps have the same size
   if (map1.size !== map2.size) {

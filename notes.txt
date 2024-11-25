@@ -1,0 +1,15 @@
+ {
+      "userName": "performance_glitch_user",
+      "userPassword": "secret_sauce",
+      "productNames": ["Sauce Labs Backpack"]
+    },
+    {
+      "userName": "visual_user",
+      "userPassword": "secret_sauce",
+      "productNames": ["Sauce Labs Backpack"]
+    },
+    {
+      "userName": "locked_out_user",
+      "userPassword": "secret_sauce",
+      "productNames": ["Sauce Labs Backpack"]
+    }

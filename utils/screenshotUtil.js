@@ -1,3 +1,4 @@
+// @ts-check
 const takeScreenshot = async () => {
   await page.screenshot({ path: "./screenshots/screenshot.png" });
 };
