@@ -16,8 +16,8 @@ export class HomeMenu {
   }
 
   async cleanUp() {
-    await this.openMenu.click();
-    await this.reset.click();
-    await this.logout.click();
+    await this.openMenu?.click();
+    await this.reset?.click();
+    await this.logout?.click();
   }
 }

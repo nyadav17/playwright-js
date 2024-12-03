@@ -25,8 +25,8 @@ export class LoginPage {
     await this.loginButton.waitFor();
   }
 
-  async navigate() {
-    const response = await this.page.goto("https://www.saucedemo.com", {
+  async navigate(url) {
+    const response = await this.page.goto(url, {
       timeout: 20000,
       waitUntil: "domcontentloaded",
     });
@@ -36,12 +36,12 @@ export class LoginPage {
 
   /**
    * @param {string} userName
-   * @param {string} userPassword
+   * @param {string} password
    */
-  async login(userName, userPassword) {
-    await this.usernameInput.fill(userName);
-    await this.usernamePassword.fill(userPassword);
-    await this.loginButton.click();
+  async login(userName, password) {
+    await this.usernameInput?.fill(userName);
+    await this.usernamePassword?.fill(password);
+    await this.loginButton?.click();
   }
 
   async validateSessionStorage(userName) {

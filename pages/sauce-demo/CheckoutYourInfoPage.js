@@ -15,12 +15,12 @@ export class CheckoutYourInfoPage {
   }
 
   async fillInfo(firstName, lastName, postalCode) {
-    await this.firstName.fill(firstName);
-    await this.lastName.fill(lastName);
-    await this.postalCode.fill(postalCode);
+    await this.firstName?.fill(firstName);
+    await this.lastName?.fill(lastName);
+    await this.postalCode?.fill(postalCode);
   }
 
   async continueCheckoutYourInfo() {
-    await this.continue.click();
+    await this.continue?.click();
   }
 }

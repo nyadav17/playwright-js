@@ -8,4 +8,5 @@ screenshots
 playwright-report/
 playwright/.cache/
 allure-results
-test-results.json
+test-result.json
+playwright/.auth

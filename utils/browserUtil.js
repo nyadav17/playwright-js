@@ -1,6 +1,6 @@
 // @ts-check
-const { chromium } = require("playwright");
-const { test, expect } = require("@playwright/test");
+import { chromium } from "playwright";
+import { test, expect } from "@playwright/test";
 
 const launchBrowser = async function (url) {
   try {
