@@ -16,7 +16,7 @@ export class CheckoutOverviewPage {
   }
 
   async validateCheckoutOverviewDetails(userName, sum) {
-    let total = await this.summaryInfoE.locator(this.itemTotalE).textContent();
+    let total = await this.summaryInfoE.locator(this.itemTotalE)?.textContent();
     if (total != null) {
       total = total.replace("Item total: $", "");
       if (userName.includes("problem")) {
@@ -28,6 +28,6 @@ export class CheckoutOverviewPage {
   }
 
   async finishCheckoutOverviewPage() {
-    await this.finish.click();
+    await this.finish?.click();
   }
 }

@@ -1,8 +1,8 @@
 {
   "users": [
     {
-      "userName": "standard_user",
-      "userPassword": "secret_sauce",
+      "userName": "U2FsdGVkX18lxgCKiWyOoyQVBzuAUYNYzbz43NwVUr0=",
+      "userPassword": "U2FsdGVkX1+6ZrzQzUFhEsYb9M9cwkjORkrcsocK4s4=",
       "productNames": ["Sauce Labs Backpack"]
     }
   ]

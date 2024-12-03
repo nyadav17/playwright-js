@@ -23,12 +23,12 @@ export class CartPage {
         const productName = await this.productItems
           .nth(i)
           .locator(this.productName)
-          .textContent();
+          ?.textContent();
         const productPrice = (
           await this.productItems
             .nth(i)
             .locator(this.productPrice)
-            .textContent()
+            ?.textContent()
         )?.replace("$", "");
 
         productMapCO.set(productName, productPrice);
@@ -38,6 +38,6 @@ export class CartPage {
   }
 
   async checkout() {
-    await this.checkOut.click();
+    await this.checkOut?.click();
   }
 }

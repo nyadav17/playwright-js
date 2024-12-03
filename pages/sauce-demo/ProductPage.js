@@ -36,20 +36,20 @@ export class ProductPage {
       .locator("xpath=//div[text()='" + productName + "']")
       .click();
     await this.addToCart.click();
-    const productprice = await this.productPrice.textContent();
-    await this.backToProducts.click();
+    const productprice = await this.productPrice?.textContent();
+    await this.backToProducts?.click();
     return productprice?.replace("$", "");
   }
   async addAllProduct() {
-    const productCount = await this.productNames.count();
+    const productCount = await this.productNames?.count();
     const productMapIO = new Map();
     if (productCount) {
       for (let i = 0; i < productCount; i++) {
-        await this.productNames.nth(i).click();
-        const name = await this.productName.textContent();
-        const prize = await this.productPrice.textContent();
-        await this.addToCart.click();
-        await this.backToProducts.click();
+        await this.productNames.nth(i)?.click();
+        const name = await this.productName?.textContent();
+        const prize = await this.productPrice?.textContent();
+        await this.addToCart?.click();
+        await this.backToProducts?.click();
         productMapIO.set(name, prize?.replace("$", ""));
       }
     }
@@ -58,6 +58,6 @@ export class ProductPage {
   }
 
   async moveToCart() {
-    await this.cart.click();
+    await this.cart?.click();
   }
 }

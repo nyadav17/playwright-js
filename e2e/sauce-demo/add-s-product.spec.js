@@ -8,6 +8,7 @@ import { CartPage } from "../../pages/sauce-demo/CartPage.js";
 import { CheckoutOverviewPage } from "../../pages/sauce-demo/CheckoutOverviewPage.js";
 import { CheckoutYourInfoPage } from "../../pages/sauce-demo/CheckoutYourInfoPage.js";
 import { HomeMenu } from "../../pages/sauce-demo/HomeMenu.js";
+import { decryptData } from "../../utils/EncryptUtil.js";
 
 let loginPage;
 let productPage;
@@ -15,35 +16,41 @@ let cartPage;
 let checkoutOverviewPage;
 let checkoutYourInfoPage;
 let homeMenu;
-
-test.beforeAll(async () => {});
-
-test.beforeEach("before each", async ({ page }) => {
-  loginPage = new LoginPage(page);
-  productPage = new ProductPage(page);
-  cartPage = new CartPage(page);
-  checkoutOverviewPage = new CheckoutOverviewPage(page);
-  checkoutYourInfoPage = new CheckoutYourInfoPage(page);
-  homeMenu = new HomeMenu(page);
-});
+let url;
+let decryptedUsername;
+let decryptedPassword;
 
 for (const [okey, ovalue] of Object.entries(users)) {
-  const [userName, userPassword, productNames] = Object.values(ovalue);
+  const [encryptedUserName, encryptedPassword, productNames] =
+    Object.values(ovalue);
   test.describe("@All @SauceDemoSmoke", () => {
-    test(`@SingleProduct | Add single product | testing with ${okey}: ${userName}`, async ({
-      page,
-    }) => {
-      await loginPage.navigate();
+    test.beforeAll(async () => {
+      url = process.env.APPURL;
+      decryptedUsername = decryptData(encryptedUserName);
+      decryptedPassword = decryptData(encryptedPassword);
+    });
+
+    test.beforeEach("before each", async ({ page }) => {
+      loginPage = new LoginPage(page);
+      productPage = new ProductPage(page);
+      cartPage = new CartPage(page);
+      checkoutOverviewPage = new CheckoutOverviewPage(page);
+      checkoutYourInfoPage = new CheckoutYourInfoPage(page);
+      homeMenu = new HomeMenu(page);
+    });
+
+    test(`@SingleProduct | Add single product | testing with ${okey}: ${decryptedUsername}`, async ({}) => {
+      await loginPage.navigate(url);
       await loginPage.waitForPageLoad();
       const productMapIO = new Map();
-      await loginPage.login(userName, userPassword);
+      await loginPage.login(decryptedUsername, decryptedPassword);
 
-      if (userName.includes("locked_out")) {
+      if (decryptedUsername.includes("locked_out")) {
         await loginPage.validateLockedUserMessage();
-      } else if (userName.includes("error")) {
+      } else if (decryptedUsername.includes("error")) {
         await loginPage.validateErrorUserMessage();
       } else {
-        await loginPage.validateSessionStorage(userName);
+        await loginPage.validateSessionStorage(decryptedUsername);
         await productPage.waitForPageLoad();
         await productPage.applyFilter("Name (A to Z)");
 
@@ -69,18 +76,16 @@ for (const [okey, ovalue] of Object.entries(users)) {
         await checkoutYourInfoPage.fillInfo("Nitesh", "Yadav", "122001");
         await checkoutYourInfoPage.continueCheckoutYourInfo();
         await checkoutOverviewPage.validateCheckoutOverviewDetails(
-          userName,
+          decryptedUsername,
           sum
         );
         await checkoutOverviewPage.finishCheckoutOverviewPage();
       }
     });
   });
+  test.afterEach("after each", async ({ page }) => {
+    await homeMenu.cleanUp();
+    await page.close();
+  });
+  test.afterAll(async () => {});
 }
-
-test.afterEach("after each", async ({ page }) => {
-  await homeMenu.cleanUp();
-  await page.close();
-});
-
-test.afterAll(async () => {});
