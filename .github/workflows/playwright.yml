@@ -7,17 +7,19 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #windows-latest macos-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 23
-      - name: Build Docker image
-        run: docker build -t playwright-tests .
-      - name: Run Playwright tests on Docker
-        run: docker run playwright-tests
-      - uses: actions/upload-artifact@v3
+          node-version: lts/*
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npm playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright tests
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
