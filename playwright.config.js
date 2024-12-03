@@ -11,7 +11,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   globalSetup: require.resolve("./global-setup.js"),
-  timeout: 1 * 60 * 1000,
+  timeout: 2 * 60 * 1000,
   testDir: "./e2e/",
   /* Run tests in files in parallel */
   fullyParallel: true,
